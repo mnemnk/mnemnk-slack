@@ -1,0 +1,54 @@
+{
+  "agents": [
+    {
+      "kind": "Command",
+      "name": "mnemnk-slack-listen",
+      "title": "Slack Listen",
+      "category": "Apps/Slack",
+      "command": {
+        "cmd": "uv",
+        "args": ["run", "mnemnk-slack-listen"]
+      },
+      "outputs": ["data"],
+      "default_config": [
+        [
+          "channel_name",
+          {
+            "value": "",
+            "type": "string",
+            "title": "Channel Name"
+          }
+        ],
+        [
+          "include_replies",
+          {
+            "value": false,
+            "type": "boolean",
+            "title": "Include Replies"
+          }
+        ]
+      ]
+    },
+    {
+      "kind": "Command",
+      "name": "mnemnk-slack-post",
+      "title": "Slack Post",
+      "category": "Apps/Slack",
+      "command": {
+        "cmd": "uv",
+        "args": ["run", "mnemnk-slack-post"]
+      },
+      "inputs": ["data"],
+      "default_config": [
+        [
+          "channel_name",
+          {
+            "value": "",
+            "type": "string",
+            "title": "Channel Name"
+          }
+        ]
+      ]
+    }
+  ]
+}

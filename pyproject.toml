@@ -1,0 +1,28 @@
+[project]
+name = "mnemnk-slack"
+version = "0.1.0"
+description = "Slack integration agents for Mnemnk app"
+readme = "README.md"
+authors = [
+    { name = "Akira Ishino", email = "akira@lumilab.jp" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "loguru>=0.7.3",
+    "python-dotenv>=1.1.0",
+    "slack-bolt>=1.23.0",
+    "slack-sdk>=3.35.0",
+]
+
+[project.scripts]
+mnemnk-slack-listen = "mnemnk_slack.listen:main"
+mnemnk-slack-post = "mnemnk_slack.post:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "ruff>=0.11.9",
+]
