@@ -96,14 +96,17 @@ class SlackListenerAgent(BaseAgent):
                 return
 
             try:
+                user_info = self._get_user_info(event.get("user"))
+                channel_info = self._get_channel_info(event.get("channel"))
+
                 message_data = {
                     "text": event.get("text", ""),
                     "blocks": event.get("blocks", []),
                     "files": event.get("files", []),
                     "ts": event.get("ts", ""),
                     "thread_ts": event.get("thread_ts", ""),
-                    "user": event.get("user", ""),
-                    "channel": event.get("channel", ""),
+                    "user_info": user_info,
+                    "channel_info": channel_info,
                     "team": event.get("team", ""),
                 }
 
@@ -114,6 +117,36 @@ class SlackListenerAgent(BaseAgent):
                 )
             except Exception as e:
                 logger.error(f"Error processing message: {e}")
+
+    def _get_user_info(self, user_id):
+        """Fetch user information from Slack."""
+        user_info = {}
+        if user_id:
+            user_info["id"] = user_id
+            try:
+                response = self.slack_app.client.users_info(user=user_id)
+                if response["ok"]:
+                    user_info = response["user"]
+                else:
+                    logger.error(f"Error fetching user info: {response['error']}")
+            except SlackApiError as e:
+                logger.error(f"Error fetching user info: {e}")
+        return user_info
+
+    def _get_channel_info(self, channel_id):
+        """Fetch channel information from Slack."""
+        channel_info = {}
+        if channel_id:
+            channel_info["id"] = channel_id
+            try:
+                response = self.slack_app.client.conversations_info(channel=channel_id)
+                if response["ok"]:
+                    channel_info = response["channel"]
+                else:
+                    logger.error(f"Error fetching channel info: {response['error']}")
+            except SlackApiError as e:
+                logger.error(f"Error fetching channel info: {e}")
+        return channel_info
 
     @override
     def process_config(self, new_config: dict[str, Any]):
