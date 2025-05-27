@@ -25,7 +25,7 @@ Slack integration agents for the Mnemnk application that connect Slack channels 
 1. Clone the repository:
    ```bash
    cd {Mnemnk Directory}/agents/
-   git clone https://github.com/yourusername/mnemnk-slack.git
+   git clone https://github.com/mnemnk/mnemnk-slack.git
    ```
 
 2. Build
